@@ -148,3 +148,78 @@
 // type Book = {
 //   price: number;
 // };
+
+// function getFirstThree(x: string | number[]) {
+//   return x.slice(0, 3);
+// }
+
+// // console.log(getFirstThree("hello"));
+// console.log(getFirstThree([0, 1, 2, 3, 4, 5]));
+
+// Generics,
+
+// function logNumber(arg: number[]) {
+//   console.log(arg);
+//   return arg;
+// }
+
+// function logAnything(arg: any) {
+//   console.log(arg);
+//   return arg;
+// }
+
+// function logAnything<T>(arg: T): T {
+//   console.log(arg);
+//   return arg;
+// }
+// logAnything([3, "4"]);
+// logAnything([3, 4]);
+
+// interface HasAge {
+//   age: number;
+// }
+
+// function getOldest<T extends HasAge>(people: T[]): T {
+//   return people.sort((a, b) => (b.age = a.age))[0];
+// }
+
+// const people = [{ age: 30 }, { age: 50 }, { age: 40 }];
+
+// interface Player {
+//   name: string;
+//   age: number;
+// }
+
+// const players: Player[] = [
+//   { name: "john", age: 50 },
+//   { name: "wick", age: 30 },
+//   { name: "Tim", age: 40 },
+// ];
+
+// Assertion - not a good way
+// const person = getOldest(players) as Player;
+
+// Uisng Generics
+// const person = getOldest(players);
+
+interface IPost {
+  title: string;
+  id: number;
+  description: string;
+}
+
+const fetchPostData = async (path: string): Promise<IPost[]> => {
+  const response = await fetch(`https://example.com${path}`);
+  return response.json();
+};
+
+const fetchData = async <T>(path: string): Promise<T> => {
+  const response = await fetch(`https://example.com${path}`);
+  return response.json();
+};
+
+(async () => {
+  const posts = await fetchData<IPost[]>("/posts");
+  posts[0].id;
+  posts[0].title;
+})();
